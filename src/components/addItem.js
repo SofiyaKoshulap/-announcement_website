@@ -25,6 +25,7 @@ export default class AddItem extends Component {
             })
             localStorage.setItem('data', JSON.stringify(data));
             this.setState({ title: '', description: '' });
+            window.location.reload();
         }
     }
 

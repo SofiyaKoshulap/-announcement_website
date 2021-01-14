@@ -7,30 +7,13 @@ import AddItem from "./addItem";
 export default class AnnoucementList extends Component {
     constructor(props) {
         super(props);
-        let data = JSON.parse(localStorage.getItem("data"));
+        // let data = JSON.parse(localStorage.getItem("data"));
         this.state = {
-            announcements: data || [],
+            announcements: JSON.parse(localStorage.getItem("data")) || [],
         };
 
     }
-    showList = (list) => {
-        let announcementList = 'No announcement'
-        if (list) {
-            announcementList = list.map(announcement => {
-                return (
-                    <div key={announcement.id}>
-                        <div>
-                            <h4>{announcement.title}</h4>
-                            <p>{announcement.description}</p>
-                            <p>{announcement.time}</p>
-                        </div>
-
-                    </div>)
-            })
-
-        }
-        return announcementList;
-    }
+    
     render() {
         const announcements = this.state.announcements
         let announcementList = 'No announcement'
@@ -46,7 +29,7 @@ export default class AnnoucementList extends Component {
 
                         announcementList = announcements.map(announcement => {
                             return (
-                                <Link><div key={announcement.id}>
+                                <Link to={'/announcement/'+ announcement.id}><div key={announcement.id}>
                                     <h4>{announcement.title}</h4>
                                     <p>{announcement.description}</p>
                                     <p>{announcement.time}</p>
