@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AddItem from "./addItem";
+import EditItem from "./editItem";
 
 
 
@@ -10,31 +10,33 @@ export default class Announcement extends Component {
             id: '',
             title: '',
             description: '',
-            time: ''
+            time: '',
+            index: ''
         };
 
     }
     componentDidMount() {
         const data = JSON.parse(localStorage.getItem("data"));
         let id = this.props.match.params.announcement_id;
-        console.log(data)
         data.map(item => {
             if (item.id === id) {
                 return (this.setState(state => ({
                     id: item.id,
                     title: item.title,
                     description: item.description,
-                    time: item.time
+                    time: item.time,
+                    index: data.indexOf(item)
                 })))
             }
         })
 
     }
+
     render() {
         return (
             <div>
                 <div>
-                    {/* <AddItem data={announcements} /> */}
+                    <EditItem title={this.state.title} description={this.state.description} id={this.state.id} index={this.state.index} />
                 </div>
                 <div>
                     <div key={this.state.id}>

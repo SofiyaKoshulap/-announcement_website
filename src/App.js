@@ -2,6 +2,7 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import './App.css';
 import AnnoucementList from './components/announsementList'
 import Announcement from './components/announcement'
+import SearchPage from './components/searchPage'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={AnnoucementList} />
           <Route path='/announcement/:announcement_id' component={Announcement} />
+          <Route path='/search/:input' component={SearchPage} />
         </Switch>
       </div>
     </BrowserRouter>

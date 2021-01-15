@@ -1,18 +1,30 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom'
-import AddItem from "./addItem";
 
 
 
-export default class AnnoucementList extends Component {
+export default class SearchPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            announcements: JSON.parse(localStorage.getItem("data")) || [],
-            searchTitle: ''
+            announcements: [],
         };
 
     }
+    componentDidMount() {
+        const data = JSON.parse(localStorage.getItem("data"));
+        let title = this.props.match.params.input;
+        let searchItem = []
+        data.map(item => {
+            if (item.title === title) {
+                searchItem.push(item)
+            }
+        })
+        this.setState(state => ({
+            announcements: searchItem
+        }))
+    }
+
     handleDelete(id) {
         let data = this.state.announcements;
         data.splice(id, 1);
@@ -22,19 +34,12 @@ export default class AnnoucementList extends Component {
         localStorage.setItem("data", JSON.stringify(data));
 
     }
-    handleTextChange = (e) => this.setState({ [e.target.name]: e.target.value });
     render() {
-        const announcements = this.state.announcements
+        let announcements = this.state.announcements
         let announcementList = 'ms;lcm;'
         return (
             <div>
-                <div>
-                    <input onChange={this.handleTextChange} value={this.state.searchTitle} type="text" name="searchTitle" placeholder="Title" />
-                    <Link to={'/search/' + this.state.searchTitle}><button>Search</button></Link>
-                </div>
-                <div>
-                    <AddItem data={announcements} />
-                </div>
+                <h2>Your search results for: "{this.props.match.params.input}"</h2>
                 <div>
                     {
                         announcementList = announcements.map(announcement => {
