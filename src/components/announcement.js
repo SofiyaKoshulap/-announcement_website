@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import EditItem from "./editItem";
-
+import { Link } from 'react-router-dom'
+// import SimilarAnnousement from "./similarAnnounsement";
 
 
 export default class Announcement extends Component {
@@ -11,39 +12,51 @@ export default class Announcement extends Component {
             title: '',
             description: '',
             time: '',
-            index: ''
+            index: '',
+            similar: []
         };
+        this.getData = this.getData.bind(this);
 
     }
     componentDidMount() {
+        this.getData()
+    }
+    getData() {
         const data = JSON.parse(localStorage.getItem("data"));
         let id = this.props.match.params.announcement_id;
         data.map(item => {
             if (item.id === id) {
-                return (this.setState(state => ({
+                const indexItem = data.indexOf(item)
+                this.setState(state => ({
                     id: item.id,
                     title: item.title,
                     description: item.description,
                     time: item.time,
-                    index: data.indexOf(item)
-                })))
+                    index: indexItem,
+                }))
             }
         })
-
     }
 
     render() {
         return (
             <div>
-                <div>
-                    <EditItem title={this.state.title} description={this.state.description} id={this.state.id} index={this.state.index} />
+                <div class="card w-75 my-5 mx-auto shadow-lg" >
+                    <div class="card-body" key={this.state.id}>
+                        <h4 class="card-title">{this.state.title}</h4>
+                        <p class="card-text text-black-50">{this.state.time
+                            .replace("-", "/")
+                            .split("T")[0]
+                            .replace("-", "/")}</p>
+                        <p class="card-text">{this.state.description}</p>
+                    </div>
+                    <div>
+                        <Link to={'/'}><button class="btn btn-info mx-4 my-3">Main Page</button></Link>
+                        <EditItem title={this.state.title} description={this.state.description} id={this.state.id} index={this.state.index} />
+                    </div>
                 </div>
                 <div>
-                    <div key={this.state.id}>
-                        <h4>{this.state.title}</h4>
-                        <p>{this.state.description}</p>
-                        <p>{this.state.time}</p>
-                    </div>
+                    {/* <SimilarAnnousement id={this.state.index} /> */}
                 </div>
             </div>
 

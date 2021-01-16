@@ -1,8 +1,8 @@
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
-import './App.css';
 import AnnoucementList from './components/announsementList'
 import Announcement from './components/announcement'
 import SearchPage from './components/searchPage'
+import './App.css';
 
 function App() {
   return (

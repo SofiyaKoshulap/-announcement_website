@@ -31,17 +31,21 @@ export default class EditItem extends Component {
 
     render() {
         return (
-            <Popup trigger={<button className="button"> Edit </button>} modal>
+            <Popup trigger={<button className='btn btn-info' > Edit announcement </button>} modal position='bottom center'>
                 {close =>
-                    <div className="modal">
-                        <h2>Edit</h2>
-                        <div className="content">
-                            <input onChange={this.handleTextChange} value={'data[index].title'} type="text" name="title" placeholder="Title" />
-                            <textarea onChange={this.handleTextChange} value={this.state.description} name="description" placeholder="Description" rows='20' />
-                        </div>
-                        <div className="actions">
-                            <button className="button" onClick={this.handleSubmit.bind(this)}>Save</button>
-                            <button className="button" onClick={() => { close(); }}>Cancel</button>
+                    <div class="modal-dialog modal-lg shadow-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input className="form-control" onChange={this.handleTextChange} value={this.state.title} type="text" name="title" placeholder="Title" /><br></br>
+                                <textarea className="form-control" onChange={this.handleTextChange} value={this.props.description} name="description" placeholder="Description" rows='15' />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-dismiss="modal" onClick={this.handleSubmit.bind(this)}>Save</button>
+                                <button type="button" class="btn btn-info" data-dismiss="modal" onClick={() => { close(); }}>Close</button>
+                            </div>
                         </div>
                     </div>
                 }
