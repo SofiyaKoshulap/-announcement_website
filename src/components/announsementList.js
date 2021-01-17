@@ -40,13 +40,13 @@ export default class AnnoucementList extends Component {
                     {
                         announcementList = announcements.map(announcement => {
                             return (
-                                <div class="card d-flex flex-row justify-content-between w-75 my-2 mx-auto shadow-lg">
-                                    <Link to={'/announcement/' + announcement.id}><div class="card-body" key={announcement.id}>
-                                        <h2 class="card-title ">{announcement.title}</h2>
+                                <div className="card d-flex flex-row justify-content-between w-75 my-2 mx-auto shadow-lg" key={announcement.id}>
+                                    <Link to={'/announcement/' + announcement.id}><div className="card-body" >
+                                        <h2 className="card-title ">{announcement.title}</h2>
                                     </div>
                                     </Link>
-                                    <div class=" float-right">
-                                        <button class="btn btn-info float-right" onClick={this.handleDelete.bind(this, announcements.indexOf(announcement))}><i class="fas fa-trash"></i></button>
+                                    <div className=" float-right">
+                                        <button className="btn btn-info float-right" onClick={this.handleDelete.bind(this, announcements.indexOf(announcement))}><i className="fas fa-trash"></i></button>
                                     </div>
                                 </div>
                             )

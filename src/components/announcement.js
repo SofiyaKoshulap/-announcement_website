@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import EditItem from "./editItem";
 import { Link } from 'react-router-dom'
-// import SimilarAnnousement from "./similarAnnounsement";
 
 
 export default class Announcement extends Component {
@@ -13,9 +12,10 @@ export default class Announcement extends Component {
             description: '',
             time: '',
             index: '',
-            similar: []
+            announcement: null,
         };
         this.getData = this.getData.bind(this);
+        this.findSimilarAnnouncements = this.findSimilarAnnouncements.bind(this);
 
     }
     componentDidMount() {
@@ -33,12 +33,47 @@ export default class Announcement extends Component {
                     description: item.description,
                     time: item.time,
                     index: indexItem,
+                    announcement: item
                 }))
             }
         })
     }
+    findSimilarAnnouncements(announcements, targetAnnouncement) {
+        const targetTitleWords = targetAnnouncement.title.split(' ');
+        const targetDescriptionWords = targetAnnouncement.description.split(' ');
+
+        return announcements.filter(({ title, description }) => {
+            const titleWords = title.split(' ');
+            const descriptionWords = description.split(' ');
+
+            const isTitleSimilar = targetTitleWords
+                .some(word => titleWords.includes(word));
+            const isDescriptionSimilar = targetDescriptionWords
+                .some(word => descriptionWords.includes(word));
+
+            return isTitleSimilar && isDescriptionSimilar;
+        });
+    };
+
 
     render() {
+        const data = JSON.parse(localStorage.getItem("data"));
+        const target = this.state.announcement
+        if (target) { var similartList = this.findSimilarAnnouncements(data, target) }
+        if (similartList) {
+            var similarShow = similartList.map(announcement => {
+                if (announcement.id !== this.state.id) {
+                    return (
+                        <div className="card d-flex flex-row justify-content-between my-2 mx-auto shadow-lg" key={announcement.id}>
+                            <Link to={'/announcement/' + announcement.id}><div className="card-body" >
+                                <h2 className="card-title ">{announcement.title}</h2>
+                            </div>
+                            </Link>
+                        </div>
+                    )
+                }
+            })
+        }
         return (
             <div>
                 <div class="card w-75 my-5 mx-auto shadow-lg" >
@@ -55,8 +90,9 @@ export default class Announcement extends Component {
                         <EditItem title={this.state.title} description={this.state.description} id={this.state.id} index={this.state.index} />
                     </div>
                 </div>
-                <div>
-                    {/* <SimilarAnnousement id={this.state.index} /> */}
+                <div className='w-75 my-3 mx-auto'>
+                    <h2 className='text-info'>Similar announcement</h2>
+                    {similarShow}
                 </div>
             </div>
 

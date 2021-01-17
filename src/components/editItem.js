@@ -28,19 +28,26 @@ export default class EditItem extends Component {
             window.location.reload();
         }
     }
+    getData() {
+        this.setState(state => ({
+            title: this.props.title,
+            description: this.props.description,
+        }))
+    }
 
     render() {
+
         return (
             <Popup trigger={<button className='btn btn-info' > Edit announcement </button>} modal position='bottom center'>
                 {close =>
                     <div class="modal-dialog modal-lg shadow-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Edit</h4>
+                                <h4 class="modal-title">Edit announcement</h4>
                             </div>
                             <div class="modal-body">
-                                <input className="form-control" onChange={this.handleTextChange} value={this.state.title} type="text" name="title" placeholder="Title" /><br></br>
-                                <textarea className="form-control" onChange={this.handleTextChange} value={this.props.description} name="description" placeholder="Description" rows='15' />
+                                <input className="form-control" onChange={this.handleTextChange} onFocus={this.getData.bind(this)} value={this.state.title} type="text" name="title" placeholder="Title" /><br></br>
+                                <textarea className="form-control" onChange={this.handleTextChange} value={this.state.description} name="description" placeholder="Description" rows='15' />
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-info" data-dismiss="modal" onClick={this.handleSubmit.bind(this)}>Save</button>
